@@ -3,8 +3,12 @@ t <html>
 t <head>
 t     <meta charset="UTF-8">
 t     <title>LED Control</title>
+t     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 t     <script language="JavaScript">
 t         let pageFullyLoaded = false;
+t         let potentiometerHistory = [];
+t         
+t         google.charts.load('current', {'packages':['corechart']});
 t         
 t         function toggleLED() {
 t             if(pageFullyLoaded) {
@@ -53,15 +57,18 @@ t                     let xmlDoc = parser.parseFromString(data, "text/xml");
 t                     let values = xmlDoc.getElementsByTagName("value");
 t                     if(values.length > 0) {
 t                         let hexValue = values[0].textContent;
-t                         console.log(hexValue);
 t                         let numVal = parseInt(hexValue, 16);
-t                         console.log(numVal);
 t                         let voltsVal = (13.2 * numVal) / 4096;
-t                         console.log(voltsVal);
+t                         console.log("Potentiometer VoltValue: " + voltsVal);
 t                         let progressBar = document.getElementById("potentiometerBar");
 t                         if(progressBar) {
 t                             progressBar.value = voltsVal.toFixed(1);
 t                         }
+t                         potentiometerHistory.push(voltsVal.toFixed(2));
+t                         if(potentiometerHistory.length > 60) {
+t                             potentiometerHistory.shift();
+t                         }
+t                         drawPotentiometerChart();
 t                     }
 t                 })
 t                 .catch(error => {
@@ -69,11 +76,39 @@ t                     console.error("Error fetching potentiometer value:", error
 t                 });
 t         }
 t         
+t         function drawPotentiometerChart() {
+t             if(potentiometerHistory.length === 0) return;
+t             
+t             let chartData = [['Sample', 'Voltage (V)']];
+t             for(let i = 0; i < potentiometerHistory.length; i++) {
+t                 chartData.push(['' + (i + 1), parseFloat(potentiometerHistory[i])]);
+t             }
+t             
+t             let data = google.visualization.arrayToDataTable(chartData);
+t             
+t             let options = {
+t                 title: 'Potentiometer Voltage History (Last 60 samples)',
+t                 curveType: 'function',
+t                 legend: { position: 'bottom' },
+t                 hAxis: {
+t                     title: 'Sample Number'
+t                 },
+t                 vAxis: {
+t                     title: 'Voltage (V)',
+t                     minValue: 0,
+t                     maxValue: 13.2
+t                 }
+t             };
+t             
+t             let chart = new google.visualization.LineChart(document.getElementById('potentiometer_chart'));
+t             chart.draw(data, options);
+t         }
+t         
 t         window.addEventListener("load", () => {
 t             console.log("Page loaded, starting polling...");
 t             pageFullyLoaded = true;
 t             setInterval(pollButtonStatus, 2000);
-t             setInterval(pollPotentiometer, 2000);
+t             setInterval(pollPotentiometer, 5000);
 t         });
 t     </script>
 t </head>
@@ -136,6 +171,14 @@ t             <tr>
 t                 <td align="center">
 t                     <label for="potentiometerBar">Potentiometer (0-13.2V):</label><br><br>
 t                     <progress id="potentiometerBar" value="0" max="13.2"> 0% </progress>
+t                 </td>
+t             </tr>
+t             <tr bgcolor="#e8f0f8">
+t                 <th>Potentiometer History</th>
+t             </tr>
+t             <tr>
+t                 <td align="center">
+t                     <div id="potentiometer_chart" style="width: 900px; height: 500px"></div>
 t                 </td>
 t             </tr>
 t         </table>
