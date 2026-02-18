@@ -875,21 +875,6 @@
               <FileType>9</FileType>
               <FilePath>.\Web\index2.cgi</FilePath>
             </File>
-            <File>
-              <FileName>script.js</FileName>
-              <FileType>9</FileType>
-              <FilePath>.\Web\script.js</FilePath>
-            </File>
-            <File>
-              <FileName>button.cgi</FileName>
-              <FileType>9</FileType>
-              <FilePath>.\Web\button.cgi</FilePath>
-            </File>
-            <File>
-              <FileName>index3.cgi</FileName>
-              <FileType>9</FileType>
-              <FilePath>.\Web\index3.cgi</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>

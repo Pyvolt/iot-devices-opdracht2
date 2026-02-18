@@ -17,8 +17,5 @@ pg_header.inc,
 system.cgi,
 tcp.cgi,
 xml_http.js,
-index2.cgi,
-script.js,
-button.cgi,
-index3.cgi 
+index2.cgi 
 TO Web.c RTE NOPRINT ROOT(Web)
