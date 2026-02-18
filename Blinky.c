@@ -36,9 +36,14 @@ static uint32_t analog_val;
 int32_t analog_in (uint32_t ch) {
   int32_t val = 0;
 
-  if (ch == 0) {
-    val = analog_val & 0x3FF;
-  }
+  if (ch == 3) {
+		HAL_ADC_Start(&hadc3);
+		HAL_ADC_PollForConversion(&hadc3, HAL_MAX_DELAY);
+		val = HAL_ADC_GetValue(&hadc3);
+		HAL_ADC_Stop(&hadc3);
+  } else if (ch == 0) {
+		val = analog_val & 0x3FF;
+	}
   return (val);
 }
 

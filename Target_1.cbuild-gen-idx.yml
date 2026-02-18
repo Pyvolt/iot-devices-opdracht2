@@ -4,10 +4,10 @@ build-gen-idx:
     - board: 
       device: STM32F746NGHx
       id: CubeMX
-      output: D:/cursussen/iot-systems-ao/voorbereiding/HTTP_Server/STM32CubeMX/Target_1/
+      output: C:/Users/kevin/OneDrive/3 - Elektronica-ICT/Fase 3/IoT Systems/Opdracht 2/STM32F746G-DISCO-GUI_VNC-uvision/STM32CubeMX/Target_1/
       project-type: single-core
       cbuild-gens:
-        - cbuild-gen: D:/cursussen/iot-systems-ao/voorbereiding/HTTP_Server/STM32F746G-DISCO-GUI_VNC-uvision.Target_1.cbuild-gen.yml
+        - cbuild-gen: C:/Users/kevin/OneDrive/3 - Elektronica-ICT/Fase 3/IoT Systems/Opdracht 2/STM32F746G-DISCO-GUI_VNC-uvision/STM32F746G-DISCO-GUI_VNC-uvision.Target_1.cbuild-gen.yml
           configuration: .Target_1
-          name: D:/cursussen/iot-systems-ao/voorbereiding/HTTP_Server/STM32CubeMX/Target_1/STM32F746G-DISCO-GUI_VNC-uvision.cgen.yml
+          name: C:/Users/kevin/OneDrive/3 - Elektronica-ICT/Fase 3/IoT Systems/Opdracht 2/STM32F746G-DISCO-GUI_VNC-uvision/STM32CubeMX/Target_1/STM32F746G-DISCO-GUI_VNC-uvision.cgen.yml
           project: STM32F746G-DISCO-GUI_VNC-uvision

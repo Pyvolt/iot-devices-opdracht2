@@ -12,7 +12,7 @@
 
 #include "cmsis_os2.h"                  // ::CMSIS:RTOS2
 #include "cmsis_vio.h"                  // ::CMSIS Driver:VIO
-
+#include "stm32f7xx_hal.h"
 #include "rl_net.h"                     // Keil::Network&MDK:CORE
 
 #if defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6210000)
@@ -478,7 +478,7 @@ static int32_t cgx_ad (const char *env, char *buf, uint32_t buf_len, uint32_t *s
   (void)buf_len;
   (void)state;
 
-  val = analog_in (0);
+  val = analog_in (3);
   len = sprintf (buf, &env[1], val);
   return (len);
 }

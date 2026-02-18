@@ -45,10 +45,35 @@ t                     console.error("Error fetching button status:", error);
 t                 });
 t         }
 t         
+t         function pollPotentiometer() {
+t             fetch("ad.cgx").then(response => response.text())
+t                 .then(data => {
+t                     let parser = new DOMParser();
+t                     let xmlDoc = parser.parseFromString(data, "text/xml");
+t                     let values = xmlDoc.getElementsByTagName("value");
+t                     if(values.length > 0) {
+t                         let hexValue = values[0].textContent;
+t                         console.log(hexValue);
+t                         let numVal = parseInt(hexValue, 16);
+t                         console.log(numVal);
+t                         let voltsVal = (13.2 * numVal) / 4096;
+t                         console.log(voltsVal);
+t                         let progressBar = document.getElementById("potentiometerBar");
+t                         if(progressBar) {
+t                             progressBar.value = voltsVal.toFixed(1);
+t                         }
+t                     }
+t                 })
+t                 .catch(error => {
+t                     console.error("Error fetching potentiometer value:", error);
+t                 });
+t         }
+t         
 t         window.addEventListener("load", () => {
-t             console.log("Page loaded, starting button polling...");
+t             console.log("Page loaded, starting polling...");
 t             pageFullyLoaded = true;
-t             setInterval(pollButtonStatus, 200);
+t             setInterval(pollButtonStatus, 2000);
+t             setInterval(pollPotentiometer, 2000);
 t         });
 t     </script>
 t </head>
@@ -102,6 +127,15 @@ t                             <td width="20px"></td>
 t                             <td>Button 0: <span id="buttonStatus_0">-</span></td>
 t                         </tr>
 t                     </table>
+t                 </td>
+t             </tr>
+t             <tr bgcolor="#e8f0f8">
+t                 <th>Potentiometer Value</th>
+t             </tr>
+t             <tr>
+t                 <td align="center">
+t                     <label for="potentiometerBar">Potentiometer (0-13.2V):</label><br><br>
+t                     <progress id="potentiometerBar" value="0" max="13.2"> 0% </progress>
 t                 </td>
 t             </tr>
 t         </table>
