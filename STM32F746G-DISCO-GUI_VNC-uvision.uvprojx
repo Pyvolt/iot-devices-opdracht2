@@ -875,6 +875,11 @@
               <FileType>9</FileType>
               <FilePath>.\Web\index2.cgi</FilePath>
             </File>
+            <File>
+              <FileName>script.js</FileName>
+              <FileType>9</FileType>
+              <FilePath>.\Web\script.js</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
